@@ -1,34 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <title>Product List</title>
-    </head>
-    <body>
-        <h1>Product List</h1>
-        <table border="1">
-            <thead>
+{% extends 'base.html' %}
+{% block title %}
+    Product List
+{% endblock title %}
+{% block content %}
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">Product List</h1>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class=" wfull text-sm text-left text-gray-600">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-200">
                 <tr>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Selling Price</th>
-                    <th>Quantity In Stock</th>
+                    <th scope="col" class="px-6 py-3">Name</th>
+                    <th scope="col" class="px-6 py-3">Category</th>
+                    <th scope="col" class="px-6 py-3">Selling Price</th>
+                    <th scope="col" class="px-6 py-3">Quantity in Stock</th>
                 </tr>
             </thead>
             <tbody>
                 {% for product in products %}
-                <tr>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.category }}</td>
-                    <td>{{ product.selling_price }}</td>
-                    <td>{{ product.quantity }}</td>
-                </tr>
+                    <tr class="bg-white border-b hover:bg-gray-400">
+                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ product.name }}</td>
+                        <td class="px-6 py-4">{{ product.category.name }}</td>
+                        <td class="px-6 py-4">{{ product.selling_price }}</td>
+                        <td class="px-6 py-4">{{ product.quantity }}</td>
+                    </tr>
                 {% empty %}
-                <tr>
-                    <td colspan="4">No Products Found</td>
-                </tr>
+                    <tr class="bg-white border-b">
+                        <td class="px-6 py-4 text-center" colspan="4">No products found</td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
-    </body>
-</html>
+    </div>
+{% endblock content %}

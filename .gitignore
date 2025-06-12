@@ -16,3 +16,6 @@ db.sqlite3
 .vscode/
 .DS_Store
 .idea/
+
+# Node / Frontend
+node_modules/
