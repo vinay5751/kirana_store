@@ -35,3 +35,13 @@ def edit_product(request, pk):
         form = ProductForm(instance=product)
     context = {"form": form, "product": product}
     return render(request, "inventory/edit_product.html", context)
+
+
+def delete_product(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    if request.method == "POST":
+        product.delete()
+        return redirect("inventory:product_list")
+
+    context = {"product": product}
+    return render(request, "inventory/delete_confirm.html", context)
