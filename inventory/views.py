@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product
 from .forms import ProductForm
+from django.db.models import F, Sum
 
 
 # Create your views here.
@@ -45,3 +46,21 @@ def delete_product(request, pk):
 
     context = {"product": product}
     return render(request, "inventory/delete_confirm.html", context)
+
+
+def dashboard(request):
+    total_products = Product.objects.count()
+    total_stock_value = (
+        Product.objects.aggregate(total_value=Sum(F("cost_price") * F("quantity")))[
+            "total_value"
+        ]
+        or 0.00
+    )
+
+    low_stock_products = Product.objects.filter(quantity__lt=5)
+    context = {
+        "total_products": total_products,
+        "total_stock_value": total_stock_value,
+        "low_stock_products": low_stock_products,
+    }
+    return render(request, "inventory/dashboard.html", context)
